@@ -2,6 +2,21 @@
   text-align: center;
 }
 
+.paginado {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente los elementos */
+  width: 200px;
+  margin: 10px auto; /* Centra verticalmente */
+}
+
+.number {
+  margin-right: 10px; /* Espacio entre los números */
+  padding: 5px 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #c0025b;
+  border-radius: 5px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

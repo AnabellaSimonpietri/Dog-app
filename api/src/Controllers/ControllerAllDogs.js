@@ -14,7 +14,9 @@ const getApiInfo = async () => {
       name: e.name,
       life_span: e.life_span,
       temperament: e.temperament,
-      image: e.image.url,
+      image: {
+        url: e.image.url,
+      },
       weight: e.weight,
       height: e.height,
     };
@@ -37,7 +39,7 @@ const getDbInfo = async () => {
 };
 
 const getAllDogs = async () => {
-  // Unifico los Pokemons de mi DB y mi API
+  // Unifico los dogs de mi DB y mi API
   const apiInfo = await getApiInfo();
   const dbInfo = await getDbInfo();
   const infoTotal = apiInfo.concat(dbInfo);

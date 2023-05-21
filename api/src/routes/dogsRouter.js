@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { Dogs, Temperaments } = require("../db");
 const { getAllDogs } = require("../Controllers/ControllerAllDogs");
 
 const dogsRouter = Router();
@@ -33,11 +34,13 @@ dogsRouter.post("/", async (req, res) => {
   try {
     let { name, life_span, temperament, image, weight, height } = req.body;
 
-    let dogsCreated = await Dogs.create({
+    const dogsCreate = await Dogs.create({
       name,
       life_span,
       temperament,
-      image,
+      image: {
+        url: image, // Utiliza la URL de la imagen proporcionada por el frontend
+      },
       weight,
       height,
     });
@@ -46,7 +49,7 @@ dogsRouter.post("/", async (req, res) => {
       where: { name: temperament },
     });
 
-    dogsCreated.addTemperaments(temperamentsDb);
+    dogsCreate.addTemperaments(temperamentsDb);
     res.json("Successfully created Dog"); //Dog creado con éxito
   } catch (error) {
     console.error(error);

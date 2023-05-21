@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
       },
       image: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         allowNull: false,
       },
       name: {
@@ -21,14 +21,18 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       height: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       weight: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       life_span: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      temperament: {
         type: DataTypes.STRING,
         allowNull: false,
       },

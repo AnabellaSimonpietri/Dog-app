@@ -17,8 +17,8 @@ const getApiInfo = async () => {
       image: {
         url: e.image.url,
       },
-      weight: e.weight,
-      height: e.height,
+      weight: e.weight.imperial,
+      height: e.height.imperial,
     };
   });
   return apiInfo;

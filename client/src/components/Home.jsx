@@ -99,8 +99,10 @@ export default function Home() {
               <Card
                 image={el.image.url}
                 name={el.name}
+                life_span={el.life_span}
                 temperament={el.temperament}
-                imperialWeight={el.weight.imperial}
+                weight={el.weight}
+                height={el.height}
               />
             </Link>
           </Fragment>

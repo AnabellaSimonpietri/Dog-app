@@ -12,6 +12,21 @@ export function getAllDogs() {
   };
 }
 
+export function getTemperaments() {
+  return async function (dispatch) {
+    var info = await axios.get("http://localhost:3001/temperaments", {});
+    return dispatch({ type: "GET_TEMPERAMENTS", payload: info.data });
+  };
+}
+
+export function postDogs(payload) {
+  return async function (dispatch) {
+    const response = await axios.post("http://localhost:3001/dogs", payload);
+    console.log(response);
+    return response;
+  };
+}
+
 export const searchDog = (name) => {
   return async function (dispatch) {
     try {

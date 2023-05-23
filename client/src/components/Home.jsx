@@ -1,9 +1,8 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllDogs } from "../actions";
 import { Link } from "react-router-dom";
-import Card from "./Card";
-import Paginado from "./Paginado";
+import "../styles/Home.css";
 import SearchBar from "./SearchBar";
 
 export default function Home() {
@@ -80,16 +79,28 @@ export default function Home() {
     setFilteredDogs(filteredDogs);
   }, [filterType, temperamentFilter, allDogs]);
 
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(filteredDogs.length / dogsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
   return (
     <div>
-      <Link to="/dogs">Created Dog</Link>
-      <h1>Pink Dogs App</h1>
-      <button onClick={() => dispatch(getAllDogs())}>All Dogs</button>
+      <h1>Pink Dogs Cards!</h1>
+      <div className="buttonContainer">
+        <Link to="/dogs" className="button">
+          Created Dog
+        </Link>
+        <button className="button" onClick={() => dispatch(getAllDogs())}>
+          All Dogs
+        </button>
+        <SearchBar />
+      </div>
       <div>
         <select value={sortType} onChange={handleSortChange}>
           <option value="">Sort By</option>
-          <option value="asc">Name (A-Z)</option>
-          <option value="desc">Name (Z-A)</option>
+          <option value="asc">A-Z</option>
+          <option value="desc">Z-A</option>
           <option value="weight">Weight</option>
         </select>
         <select value={filterType} onChange={handleFilterChange}>
@@ -104,7 +115,7 @@ export default function Home() {
             onChange={handleTemperamentFilterChange}
           >
             <option value="">All Temperaments</option>
-            {/* Aquí puedes generar las opciones del select con los temperamentos disponibles */}
+            {/* Acá el usuario puede generar las opciones del select con los temperamentos disponibles */}
             {allDogs
               .flatMap((dog) => dog.temperament?.split(", "))
               .filter(Boolean)
@@ -115,28 +126,41 @@ export default function Home() {
               ))}
           </select>
         )}
-        <Paginado
-          dogsPerPage={dogsPerPage}
-          allDogs={filteredDogs.length}
-          paginado={paginado}
-        />
-        <SearchBar />
 
-        {currentDogs.map((el) => (
-          // <Fragment key={el.id}>
-          <Link key={el.id} to={`/detail/${el.id}`}>
-            <Card
-              id={el.id}
-              image={el.image.url}
-              name={el.name}
-              life_span={el.life_span}
-              temperament={el.temperament}
-              weight={el.weight}
-              height={el.height}
-            />
-          </Link>
-          // </Fragment>
-        ))}
+        <div className="pagination">
+          {pageNumbers.map((number) => (
+            <button
+              key={number}
+              className={`number ${number === currentPage ? "active" : ""}`}
+              onClick={() => paginado(number)}
+            >
+              {number}
+            </button>
+          ))}
+        </div>
+
+        <div className="cardContainer">
+          {currentDogs.map((el) => (
+            <div className="card" key={el.id}>
+              <img className="cardImage" src={el.image.url} alt={el.name} />
+              <Link to={`/detail/${el.id}`} className="cardTitle">
+                {el.name}
+              </Link>
+              <div className="cardDetails">
+                <p>Life Span: {el.life_span}</p>
+                <p>Temperament: {el.temperament}</p>
+                <p>Weight: {el.weight}</p>
+                <p>Height: {el.height}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <button
+          className="backToTopButton"
+          onClick={() => window.scrollTo(0, 0)}
+        >
+          Back to Top
+        </button>
       </div>
     </div>
   );

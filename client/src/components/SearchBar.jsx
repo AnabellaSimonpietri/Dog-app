@@ -24,7 +24,9 @@ const SearchBar = () => {
         onChange={(e) => setSearchTerm(e.target.value)} //onChange es un evento en React que se dispara cuando el valor de un elemento de entrada (input) cambia.
         placeholder="Search by breed name"
       />
-      <button onClick={handleSearch}>Search</button>
+      <button className="button" onClick={handleSearch}>
+        Search
+      </button>
     </div>
   );
 };

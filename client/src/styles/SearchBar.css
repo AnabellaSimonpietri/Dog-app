@@ -1,0 +1,36 @@
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.buttonContainer .button {
+  margin-right: 10px;
+  background-color: #ff769b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.buttonContainer .button:hover {
+  background-color: #ff5575;
+}
+
+.buttonContainer input[type="text"] {
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.buttonContainer .button.searchButton {
+  background-color: #ff769b;
+  color: white;
+}
+
+.buttonContainer .button.searchButton:hover {
+  background-color: #ff5575;
+}

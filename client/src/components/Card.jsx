@@ -13,9 +13,7 @@ export default function Card({
   return (
     <div>
       <Link to={`/detail/${id}`}></Link>
-      <img src={image} alt="" width={"300px"} />{" "}
-      {/* Cambiar "image?.url" por "image" */}
-      <h3>{name}</h3>
+      <img src={image} alt="" width={"300px"} /> <h3>{name}</h3>
       <h5>Life Span: {life_span}</h5>
       <h5>Temperament: {temperament}</h5>
       <h5>Weight: {weight} kg</h5>

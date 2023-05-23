@@ -1,17 +1,18 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetail } from "../actions/index";
+import { clearDetail, getDetail } from "../actions/index";
 import { useEffect } from "react";
 import "../styles/Detail.css";
 
 const Detail = () => {
   const { idRaza } = useParams();
-
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getDetail(idRaza));
-  }, [idRaza]);
+    dispatch(clearDetail()); // Limpiar el estado del detalle
+    dispatch(getDetail(idRaza)); // Obtener el detalle del perro
+  }, [dispatch, idRaza]);
 
   const dogs = useSelector((state) => state.detail);
 

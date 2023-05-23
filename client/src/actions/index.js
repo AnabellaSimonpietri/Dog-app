@@ -39,6 +39,7 @@ export const searchDog = (name) => {
       );
       dispatch({ type: "SEARCH_DOG_SUCCESS", payload: response.data });
     } catch (error) {
+      alert("Error: " + error.message); // Alerta de error con el mensaje de error
       console.error(error);
     }
   };
@@ -52,5 +53,11 @@ export const getDetail = (id) => {
     } catch (error) {
       console.error(error);
     }
+  };
+};
+
+export const clearDetail = () => {
+  return {
+    type: "CLEAR_DETAIL",
   };
 };

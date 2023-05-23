@@ -1,4 +1,5 @@
 const initialState = {
+  //Almaceno info y se actualiza
   dogs: [],
   allDogs: [],
   temperaments: [],

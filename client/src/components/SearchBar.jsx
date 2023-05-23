@@ -16,12 +16,20 @@ const SearchBar = () => {
     dispatch(searchDog(searchTerm));
   };
 
+  const handleKeyDown = (e) => {
+    //habilita la búsqueda al presionar"Enter"
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <div>
       <input
         type="text" //Ayuda al cliente qué saber qué poner, en este caso un texto
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)} //onChange es un evento en React que se dispara cuando el valor de un elemento de entrada (input) cambia.
+        onKeyDown={handleKeyDown}
         placeholder="Search by breed name"
       />
       <button className="button" onClick={handleSearch}>

@@ -44,7 +44,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    let sortedDogs = [...filteredDogs];
+    let sortedDogs = [...filteredDogs]; //Filtros y orden funcionan combinados.
 
     if (sortType === "asc") {
       sortedDogs.sort((a, b) => a.name.localeCompare(b.name));
@@ -161,6 +161,16 @@ export default function Home() {
         >
           Back to Top
         </button>
+        <div className="appCreatedBy">
+          App created by{" "}
+          <a
+            href="https://www.linkedin.com/in/anabellasimonpietri/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @Anabella.Simonpietri
+          </a>
+        </div>
       </div>
     </div>
   );

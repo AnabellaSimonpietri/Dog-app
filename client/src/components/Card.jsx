@@ -21,3 +21,4 @@ export default function Card({
     </div>
   );
 }
+//*Cada propiedad tiene su paramero que le paso a Card//

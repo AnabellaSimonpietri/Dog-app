@@ -1,7 +1,8 @@
+//Muestra formulario para crear new dog.
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom"; //Enlaces e historial de navegacion.
 import { postDogs, getTemperaments } from "../actions/index";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"; //Despacho acciones.
 import "../styles/DogsCreate.css";
 
 function validate(input) {
@@ -18,8 +19,9 @@ export default function DogsCreate() {
   const dispatch = useDispatch();
   const temperaments = useSelector((state) => state.temperaments);
   const history = useHistory();
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({}); //almacena errores de validaciones del formu.
   const [input, setInput] = useState({
+    //almacena valores.
     name: "",
     height: "",
     weight: "",

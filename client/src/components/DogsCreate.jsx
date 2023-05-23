@@ -4,13 +4,12 @@ import { postDogs, getTemperaments } from "../actions/index";
 import { useDispatch, useSelector } from "react-redux";
 
 function validate(input) {
-  //para controlar errores en el form a la hora de que lo complete el usuario
   let errors = {};
   if (!input.name) {
     errors.name = "Need a name";
   } else if (!input.image) {
-    errors.image = "Need a image url";
-  } //puedo poner que si un numero es mayor a tal o menor tambien tire error.
+    errors.image = "Need an image URL";
+  }
   return errors;
 }
 
@@ -18,8 +17,7 @@ export default function DogsCreate() {
   const dispatch = useDispatch();
   const temperaments = useSelector((state) => state.temperaments);
   const history = useHistory();
-  const [errors, serErrors] = useState({});
-
+  const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     name: "",
     height: "",
@@ -28,21 +26,23 @@ export default function DogsCreate() {
     image: "",
     temperament: [],
   });
-
   const [newTemperament, setNewTemperament] = useState("");
+
+  useEffect(() => {
+    dispatch(getTemperaments());
+  }, [dispatch]);
 
   function handleChange(e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
-    serErrors(
+    setErrors(
       validate({
         ...input,
         [e.target.name]: e.target.value,
       })
     );
-    console.log(input);
   }
 
   function handleTemperamentChange(e) {
@@ -66,19 +66,22 @@ export default function DogsCreate() {
     }
   }
 
+  function handleDelete(el) {
+    setInput({
+      ...input,
+      temperament: input.temperament.filter((temp) => temp !== el),
+    });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     const updatedInput = {
       ...input,
-      temperament: input.temperament.join(","), // Convierte el array en una cadena de texto separada por comas
+      temperament: input.temperament.join(","),
     };
     dispatch(postDogs(updatedInput));
     history.push("/home");
   }
-
-  useEffect(() => {
-    dispatch(getTemperaments());
-  }, [dispatch]);
 
   return (
     <div>
@@ -105,6 +108,7 @@ export default function DogsCreate() {
             name="image"
             onChange={handleChange}
           />
+          {errors.image && <p className="error">{errors.image}</p>}
         </div>
         <div>
           <label>Height</label>
@@ -145,19 +149,28 @@ export default function DogsCreate() {
             </option>
           ))}
         </select>
+        <div>
+          {input.temperament.map((el) => (
+            <div key={el} className="divTemp">
+              <p>{el}</p>
+              <button className="botonX" onClick={() => handleDelete(el)}>
+                x
+              </button>
+            </div>
+          ))}
+        </div>
+        <div>
+          <input
+            type="text"
+            value={newTemperament}
+            onChange={(e) => setNewTemperament(e.target.value)}
+          />
+          <button type="button" onClick={handleAddTemperament}>
+            Add Temperament
+          </button>
+        </div>
         <button type="submit">Create</button>
       </form>
     </div>
   );
 }
-
-/* Si quiero que el usuario ponga new temperaments? <div>
-<input
-  type="text"
-  value={newTemperament}
-  onChange={(e) => setNewTemperament(e.target.value)}
-/>
-<button type="button" onClick={handleAddTemperament}>
-  Agregar
-</button>
-</div> */

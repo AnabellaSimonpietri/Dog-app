@@ -14,6 +14,7 @@ export default function Home() {
   const [filteredDogs, setFilteredDogs] = useState(allDogs);
   const [sortType, setSortType] = useState("");
   const [filterType, setFilterType] = useState("all");
+  const [temperamentFilter, setTemperamentFilter] = useState("");
 
   const indexOfLastDog = currentPage * dogsPerPage;
   const indexOfFirstDog = indexOfLastDog - dogsPerPage;
@@ -39,6 +40,10 @@ export default function Home() {
     setFilterType(e.target.value);
   };
 
+  const handleTemperamentFilterChange = (e) => {
+    setTemperamentFilter(e.target.value);
+  };
+
   useEffect(() => {
     let sortedDogs = [...filteredDogs];
 
@@ -48,8 +53,8 @@ export default function Home() {
       sortedDogs.sort((a, b) => b.name.localeCompare(a.name));
     } else if (sortType === "weight") {
       sortedDogs.sort((a, b) => {
-        const weightA = parseFloat(a.weight.metric);
-        const weightB = parseFloat(b.weight.metric);
+        const weightA = parseFloat(a.weight);
+        const weightB = parseFloat(b.weight);
         return weightA - weightB;
       });
     }
@@ -66,8 +71,14 @@ export default function Home() {
       filteredDogs = allDogs.filter((dog) => dog.createBD);
     }
 
+    if (temperamentFilter !== "") {
+      filteredDogs = filteredDogs.filter((dog) =>
+        dog.temperament?.split(", ").includes(temperamentFilter)
+      );
+    }
+
     setFilteredDogs(filteredDogs);
-  }, [filterType, allDogs]);
+  }, [filterType, temperamentFilter, allDogs]);
 
   return (
     <div>
@@ -85,7 +96,25 @@ export default function Home() {
           <option value="all">All</option>
           <option value="api">API Dogs</option>
           <option value="created">Created Dogs</option>
+          <option value="temperaments">Temperaments</option>
         </select>
+        {filterType === "temperaments" && (
+          <select
+            value={temperamentFilter}
+            onChange={handleTemperamentFilterChange}
+          >
+            <option value="">All Temperaments</option>
+            {/* Aquí puedes generar las opciones del select con los temperamentos disponibles */}
+            {allDogs
+              .flatMap((dog) => dog.temperament?.split(", "))
+              .filter(Boolean)
+              .map((temperament) => (
+                <option key={temperament} value={temperament}>
+                  {temperament}
+                </option>
+              ))}
+          </select>
+        )}
         <Paginado
           dogsPerPage={dogsPerPage}
           allDogs={filteredDogs.length}
@@ -94,18 +123,19 @@ export default function Home() {
         <SearchBar />
 
         {currentDogs.map((el) => (
-          <Fragment key={el.id}>
-            <Link to={"/home/" + el.id}>
-              <Card
-                image={el.image.url}
-                name={el.name}
-                life_span={el.life_span}
-                temperament={el.temperament}
-                weight={el.weight}
-                height={el.height}
-              />
-            </Link>
-          </Fragment>
+          // <Fragment key={el.id}>
+          <Link key={el.id} to={`/detail/${el.id}`}>
+            <Card
+              id={el.id}
+              image={el.image.url}
+              name={el.name}
+              life_span={el.life_span}
+              temperament={el.temperament}
+              weight={el.weight}
+              height={el.height}
+            />
+          </Link>
+          // </Fragment>
         ))}
       </div>
     </div>

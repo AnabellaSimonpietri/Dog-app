@@ -21,9 +21,13 @@ export function getTemperaments() {
 
 export function postDogs(payload) {
   return async function (dispatch) {
-    const response = await axios.post("http://localhost:3001/dogs", payload);
-    console.log(response);
-    return response;
+    try {
+      const response = await axios.post("http://localhost:3001/dogs", payload);
+      dispatch({ type: "POST_DOG_SUCCESS", payload: response.data });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
   };
 }
 
@@ -34,6 +38,17 @@ export const searchDog = (name) => {
         `http://localhost:3001/dogs?name=${name}`
       );
       dispatch({ type: "SEARCH_DOG_SUCCESS", payload: response.data });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const getDetail = (id) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`http://localhost:3001/dogs/${id}`);
+      dispatch({ type: "GET_DETAIL", payload: response.data });
     } catch (error) {
       console.error(error);
     }

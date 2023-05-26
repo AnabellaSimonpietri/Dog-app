@@ -1,0 +1,26 @@
+.container {
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: -1px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.heart-image {
+  width: 80px; /* Ajusta el ancho del corazón */
+  height: auto; /* Ajusta automáticamente la altura proporcionalmente */
+  /* Resto de los estilos */
+  animation: pulseHeart 2s infinite;
+}
+
+@keyframes pulseHeart {
+  0% {
+    transform: scale(1); /* Estado inicial */
+  }
+  50% {
+    transform: scale(1.2); /* Escala a un tamaño mayor */
+  }
+  100% {
+    transform: scale(1); /* Vuelve al tamaño original */
+  }
+}

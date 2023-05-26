@@ -28,6 +28,9 @@ input[type="text"] {
 
 select[multiple] {
   height: 100px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
 }
 
 .error {
@@ -50,4 +53,9 @@ select[multiple] {
   color: white;
   border: none;
   cursor: pointer;
+}
+
+.confirmation {
+  color: green;
+  font-weight: bold;
 }

@@ -6,18 +6,35 @@ import { useDispatch, useSelector } from "react-redux"; //Despacho acciones.
 import "../styles/DogsCreate.css";
 
 function validate(input) {
+  //Validaciones
   let errors = {};
   if (!input.name) {
     errors.name = "Need a name";
-  } else if (!input.image) {
+  }
+  if (!input.image) {
     errors.image = "Need an image URL";
+  }
+  if (!input.height) {
+    errors.height = "Need a height";
+  }
+  if (!input.weight) {
+    errors.weight = "Need a weight";
+  }
+  if (!input.life_span) {
+    errors.life_span = "Need a life span";
   }
   return errors;
 }
 
+function sortTemperaments(temperaments) {
+  return temperaments.sort((a, b) => a.name.localeCompare(b.name)); //Ordené los temp del select
+}
+
 export default function DogsCreate() {
   const dispatch = useDispatch();
-  const temperaments = useSelector((state) => state.temperaments);
+  const temperaments = useSelector((state) =>
+    sortTemperaments(state.temperaments)
+  );
   const history = useHistory();
   const [errors, setErrors] = useState({}); //almacena errores de validaciones del formu.
   const [input, setInput] = useState({
@@ -30,6 +47,9 @@ export default function DogsCreate() {
     temperament: [],
   });
   const [newTemperament, setNewTemperament] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [showAlert, setShowAlert] = useState(false); //Alerta que no completó
+  const [showConfirmation, setShowConfirmation] = useState(false); // Alerta de confirmación
 
   useEffect(() => {
     dispatch(getTemperaments());
@@ -78,12 +98,39 @@ export default function DogsCreate() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const updatedInput = {
-      ...input,
-      temperament: input.temperament.join(","),
-    };
-    dispatch(postDogs(updatedInput));
-    history.push("/home");
+    const errors = validate(input);
+    setErrors(errors);
+    setSubmitted(true);
+
+    if (
+      Object.keys(errors).length === 0 &&
+      input.name &&
+      input.image &&
+      input.height &&
+      input.weight &&
+      input.life_span
+    ) {
+      const updatedInput = {
+        ...input,
+        temperament: input.temperament.join(","),
+      };
+      dispatch(postDogs(updatedInput));
+      setShowConfirmation(true); // Mostra confirmación
+      // Restablece el formulario
+      setInput({
+        name: "",
+        height: "",
+        weight: "",
+        life_span: "",
+        image: "",
+        temperament: [],
+      });
+      setNewTemperament("");
+      setSubmitted(false);
+      setErrors({});
+    } else {
+      setShowAlert(true);
+    }
   }
 
   return (
@@ -94,37 +141,33 @@ export default function DogsCreate() {
       <h1>Create a new breed!</h1>
       <div className="container">
         <form onSubmit={handleSubmit}>
+          {showAlert && (
+            <p className="error">Please fill out all required fields.</p>
+          )}
           <div>
-            <label>Name</label>
+            <label>Name: </label>
             <input
               type="text"
               value={input.name}
               name="name"
               onChange={handleChange}
             />
-            {errors.name && <p className="error">{errors.name}</p>}
+            {submitted && errors.name && <p className="error">{errors.name}</p>}
           </div>
           <div>
-            <label>Image</label>
+            <label>Image: </label>
             <input
               type="text"
               value={input.image}
               name="image"
               onChange={handleChange}
             />
-            {errors.image && <p className="error">{errors.image}</p>}
+            {submitted && errors.image && (
+              <p className="error">{errors.image}</p>
+            )}
           </div>
           <div>
-            <label>Height</label>
-            <input
-              type="text"
-              value={input.height}
-              name="height"
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Weight</label>
+            <label>Weight: </label>
             <input
               type="text"
               value={input.weight}
@@ -133,7 +176,16 @@ export default function DogsCreate() {
             />
           </div>
           <div>
-            <label>Life Span</label>
+            <label>Height: </label>
+            <input
+              type="text"
+              value={input.height}
+              name="height"
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label>Life Span: </label>
             <input
               type="text"
               value={input.life_span}
@@ -141,7 +193,7 @@ export default function DogsCreate() {
               onChange={handleChange}
             />
           </div>
-          <label>Temperaments</label>
+          <label>Temperaments: </label>
           <select
             multiple
             value={input.temperament}
@@ -170,12 +222,15 @@ export default function DogsCreate() {
               onChange={(e) => setNewTemperament(e.target.value)}
             />
             <button type="button" onClick={handleAddTemperament}>
-              Add Temperament
+              Add new temperament
             </button>
           </div>
           <button className="button" type="submit">
             Create
           </button>
+          {showConfirmation && (
+            <p className="confirmation">Dog created successfully!</p>
+          )}
         </form>
       </div>
     </div>

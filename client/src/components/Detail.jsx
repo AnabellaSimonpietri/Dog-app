@@ -10,8 +10,8 @@ const Detail = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(clearDetail()); // Limpiar el estado del detalle
-    dispatch(getDetail(idRaza)); // Obtener el detalle del perro
+    dispatch(clearDetail()); // Limpia el estado del detalle
+    dispatch(getDetail(idRaza)); // Obtiene el detalle del perro
   }, [dispatch, idRaza]);
 
   const dogs = useSelector((state) => state.detail);
@@ -34,7 +34,7 @@ const Detail = () => {
           </>
         )}
         <Link to="/home">
-          <button className="button">Back</button>
+          <button className="button">Home</button>
         </Link>
       </div>
     </div>

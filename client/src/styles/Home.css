@@ -1,3 +1,13 @@
+.homeTitle {
+  display: flex;
+  flex-direction: column;
+  margin-top: -15px;
+  color: rgb(104, 18, 18);
+  text-shadow: -1px 1px 2px #ffffff, -2px 2px 4px #ff4d8f;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 10px;
+}
+
 .cardContainer {
   display: flex;
   flex-wrap: wrap;
@@ -30,6 +40,9 @@
   margin-top: 10px;
   font-size: 18px;
   font-weight: bold;
+  color: brown;
+  text-shadow: -1px 1px 2px #ffffff, -2px 2px 4px #ff69b4;
+  text-decoration: none; /* Quitar subrayado */
 }
 
 .cardDetails {
@@ -41,6 +54,7 @@
 }
 
 .backToTopButton {
+  display: none;
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -54,6 +68,10 @@
 
 .backToTopButton:hover {
   background-color: #ff69b4;
+}
+
+.backToTopButton.visible {
+  display: block;
 }
 
 .buttonContainer {

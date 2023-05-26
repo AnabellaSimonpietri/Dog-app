@@ -11,9 +11,10 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [dogsPerPage, setDogsPerPage] = useState(8);
   const [filteredDogs, setFilteredDogs] = useState(allDogs);
-  const [sortType, setSortType] = useState("");
+  const [sortType, setSortType] = useState(""); //Filtros de tipo peso y altura
   const [filterType, setFilterType] = useState("all");
   const [temperamentFilter, setTemperamentFilter] = useState("");
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   const indexOfLastDog = currentPage * dogsPerPage;
   const indexOfFirstDog = indexOfLastDog - dogsPerPage;
@@ -32,6 +33,7 @@ export default function Home() {
   }, [allDogs]);
 
   const handleSortChange = (e) => {
+    //Estado que incluye opciones de ordenamiento
     setSortType(e.target.value);
   };
 
@@ -55,6 +57,12 @@ export default function Home() {
         const weightA = parseFloat(a.weight);
         const weightB = parseFloat(b.weight);
         return weightA - weightB;
+      });
+    } else if (sortType === "height") {
+      sortedDogs.sort((a, b) => {
+        const heightA = parseFloat(a.height);
+        const heightB = parseFloat(b.height);
+        return heightA - heightB;
       });
     }
 
@@ -84,9 +92,25 @@ export default function Home() {
     pageNumbers.push(i);
   }
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setShowBackToTop(true);
+      } else {
+        setShowBackToTop(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div>
-      <h1>Pink Dogs Cards!</h1>
+      <h1 className="homeTitle">Pink Dogs Cards</h1>
       <div className="buttonContainer">
         <Link to="/dogs" className="button">
           Created Dog
@@ -102,6 +126,7 @@ export default function Home() {
           <option value="asc">A-Z</option>
           <option value="desc">Z-A</option>
           <option value="weight">Weight</option>
+          <option value="height">Height</option>
         </select>
         <select value={filterType} onChange={handleFilterChange}>
           <option value="all">All</option>
@@ -126,51 +151,52 @@ export default function Home() {
               ))}
           </select>
         )}
+      </div>
 
-        <div className="pagination">
-          {pageNumbers.map((number) => (
-            <button
-              key={number}
-              className={`number ${number === currentPage ? "active" : ""}`}
-              onClick={() => paginado(number)}
-            >
-              {number}
-            </button>
-          ))}
-        </div>
-
-        <div className="cardContainer">
-          {currentDogs.map((el) => (
-            <div className="card" key={el.id}>
-              <img className="cardImage" src={el.image.url} alt={el.name} />
-              <Link to={`/detail/${el.id}`} className="cardTitle">
-                {el.name}
-              </Link>
-              <div className="cardDetails">
-                <p>Life Span: {el.life_span}</p>
-                <p>Temperament: {el.temperament}</p>
-                <p>Weight: {el.weight}</p>
-                <p>Height: {el.height}</p>
-              </div>
+      <div className="cardContainer">
+        {currentDogs.map((el) => (
+          <div className="card" key={el.id}>
+            <img className="cardImage" src={el.image.url} alt={el.name} />
+            <Link to={`/detail/${el.id}`} className="cardTitle">
+              {el.name}
+            </Link>
+            <div className="cardDetails">
+              <p>Life Span: {el.life_span}</p>
+              <p>Temperament: {el.temperament}</p>
+              <p>Weight: {el.weight} kg</p>
+              <p>Height: {el.height} cm</p>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
+      <div className="pagination">
+        {pageNumbers.map((number) => (
+          <button
+            key={number}
+            className={`number ${number === currentPage ? "active" : ""}`}
+            onClick={() => paginado(number)}
+          >
+            {number}
+          </button>
+        ))}
+
         <button
-          className="backToTopButton"
+          className={`backToTopButton ${showBackToTop ? "visible" : ""}`}
           onClick={() => window.scrollTo(0, 0)}
         >
           Back to Top
         </button>
-        <div className="appCreatedBy">
-          App created by{" "}
-          <a
-            href="https://www.linkedin.com/in/anabellasimonpietri/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            @Anabella.Simonpietri
-          </a>
-        </div>
+      </div>
+
+      <div className="appCreatedBy">
+        ♡ App created by{" "}
+        <a
+          href="https://www.linkedin.com/in/anabellasimonpietri/"
+          target="_blank" //se abre en nueva ventana.
+          rel="noopener noreferrer" //privacidad de información.
+        >
+          @Anabella.Simonpietri
+        </a>
       </div>
     </div>
   );

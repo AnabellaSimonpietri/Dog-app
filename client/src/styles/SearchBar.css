@@ -34,3 +34,9 @@
 .buttonContainer .button.searchButton:hover {
   background-color: #ff5575;
 }
+
+.clearButton {
+  cursor: pointer;
+  margin-left: 5px;
+  color: white;
+}

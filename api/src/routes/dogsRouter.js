@@ -52,7 +52,7 @@ dogsRouter.post("/", async (req, res) => {
     dogsCreate.addTemperaments(temperamentsDb);
     res.json("Successfully created Dog"); //Dog creado con éxito
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(404).send("Error creating dog");
   }
 });

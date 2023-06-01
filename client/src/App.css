@@ -56,6 +56,15 @@ h1 {
   border-radius: 15px;
 }
 
+.number a {
+  text-decoration: none;
+}
+
+.number.active {
+  background: #ff80b0; /* Color de fondo para la página actual */
+  color: white;
+}
+
 .App-link {
   color: #61dafb;
 }

@@ -1,36 +1,39 @@
-//Este es mi componente Search Bar que despacha la acción cuando se realiza la búsqueda.
-//searchTerm es una variable de estado local que almacenar el texto de búsqueda ingresado,
-//componente SearchBar que utiliza el hook useState para almacenar el valor, filtrar resultados y buscar.
-
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchDog } from "../actions";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const dispatch = useDispatch(); //dispatch es una función de Redux que envía una acción.
+  const dispatch = useDispatch();
 
   const handleSearch = () => {
-    //función que se ejecuta cuando el usuario hace clic en el botón
     dispatch(searchDog(searchTerm));
   };
 
   const handleKeyDown = (e) => {
-    //habilita la búsqueda al presionar"Enter"
     if (e.key === "Enter") {
       handleSearch();
     }
   };
 
+  const handleClear = () => {
+    setSearchTerm("");
+  };
+
   return (
-    <div>
+    <div className="searchBarContainer">
       <input
-        type="text" //Ayuda al cliente qué saber qué poner, en este caso un texto
+        type="text"
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)} //onChange es un evento en React que se dispara cuando el valor de un elemento de entrada (input) cambia.
+        onChange={(e) => setSearchTerm(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Search by breed name"
       />
+      {searchTerm && (
+        <button className="clearButton" onClick={handleClear}>
+          x
+        </button>
+      )}
       <button className="button" onClick={handleSearch}>
         Search
       </button>

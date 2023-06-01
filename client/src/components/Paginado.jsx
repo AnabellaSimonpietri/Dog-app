@@ -1,7 +1,12 @@
 import React from "react";
 
-export default function Paginado({ dogsPerPage, allDogs, paginado }) {
-  const pageNumbers = []; //declaro un arreglo vacio`
+export default function Paginado({
+  dogsPerPage,
+  allDogs,
+  currentPage,
+  paginado,
+}) {
+  const pageNumbers = []; //declaro un arreglo vacio.
 
   for (let i = 0; i <= Math.ceil(allDogs / dogsPerPage) - 1; i++) {
     pageNumbers.push(i + 1); //divide todos los personajes por la cantidad que yo quiero (8)
@@ -12,7 +17,10 @@ export default function Paginado({ dogsPerPage, allDogs, paginado }) {
       <ul className="pagination">
         {pageNumbers &&
           pageNumbers.map((number) => (
-            <div className="number" key={number}>
+            <div
+              className={`number ${currentPage === number ? "active" : ""}`}
+              key={number}
+            >
               <a onClick={() => paginado(number)}>{number}</a>
             </div>
           ))}

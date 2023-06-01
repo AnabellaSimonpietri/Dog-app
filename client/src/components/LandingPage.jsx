@@ -12,12 +12,12 @@ export default function LandingPage() {
         className="heart-image"
       />
       <h1>Welcome to Pink Dogs!</h1>
-      <div className="container">
+      {/* <div className="container">
         <p>
           This page invites you to meet the pink dogs of Fundación Amor. Dogs
           with love.
         </p>
-      </div>
+      </div> */}
       <Link to="/home">
         <button className="button">Come on</button>
       </Link>

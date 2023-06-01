@@ -26,7 +26,7 @@ temperamentsRouter.get("/", async (req, res) => {
 
     res.json(todosTemperaments);
   } catch (error) {
-    console.error(error);
+    console.log(error); //yo puse error en ambas rutas (log?)
     res.status(500).json({ message: "Error server" });
   }
 });

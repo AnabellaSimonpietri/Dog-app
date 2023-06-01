@@ -26,7 +26,7 @@ const Detail = () => {
         {dogs && (
           <>
             <h1>Name: {dogs.name}</h1>
-            <img src={dogs.image && dogs.image.url} alt="" width={"400px"} />
+            <img src={dogs.image && dogs.image.url} alt="" />
             <p>Life span: {dogs.life_span}</p>
             <p>Temperament: {dogs.temperament}</p>
             <p>Weight: {dogs.weight} kg</p>

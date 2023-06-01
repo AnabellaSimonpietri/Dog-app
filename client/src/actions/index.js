@@ -39,7 +39,7 @@ export const searchDog = (name) => {
       );
       dispatch({ type: "SEARCH_DOG_SUCCESS", payload: response.data });
     } catch (error) {
-      alert("Error: " + error.message); // Alerta de error con el mensaje de error
+      alert("Error: Sorry, that Dog does not exist "); // Alerta de error con el mensaje de error
       console.error(error);
     }
   };
@@ -57,6 +57,7 @@ export const getDetail = (id) => {
 };
 
 export const clearDetail = () => {
+  //Limpia el estado del detalle
   return {
     type: "CLEAR_DETAIL",
   };

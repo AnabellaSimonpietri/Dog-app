@@ -2,7 +2,6 @@
 //searchTerm es una variable de estado local que almacenar el texto de búsqueda ingresado,
 //componente SearchBar que utiliza el hook useState para almacenar el valor, filtrar resultados y buscar.
 
-//Nav va acá!!
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchDog } from "../actions";

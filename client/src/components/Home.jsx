@@ -103,7 +103,7 @@ export default function Home() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll); //boton scroll aparece abajo
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -179,3 +179,5 @@ export default function Home() {
     </div>
   );
 }
+
+//Utilizo useEffect para cargar los perros, actualizar los perros filtrados, aplicar filtros y ordenar los perros...

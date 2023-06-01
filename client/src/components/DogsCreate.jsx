@@ -27,7 +27,7 @@ function validate(input) {
 }
 
 function sortTemperaments(temperaments) {
-  return temperaments.sort((a, b) => a.name.localeCompare(b.name)); //Ordené los temp del select
+  return temperaments.sort((a, b) => a.name.localeCompare(b.name)); //Ordené los temp del select abcedario
 }
 
 export default function DogsCreate() {
@@ -66,6 +66,7 @@ export default function DogsCreate() {
         [e.target.name]: e.target.value,
       })
     );
+    setShowAlert(false); // Oculta el mensaje de error general
   }
 
   function handleTemperamentChange(e) {
@@ -141,7 +142,7 @@ export default function DogsCreate() {
       <h1>Create a new breed!</h1>
       <div className="container">
         <form onSubmit={handleSubmit}>
-          {showAlert && (
+          {showAlert && Object.keys(errors).length > 0 && (
             <p className="error">Please fill out all required fields.</p>
           )}
           <div>
@@ -152,7 +153,7 @@ export default function DogsCreate() {
               name="name"
               onChange={handleChange}
             />
-            {submitted && errors.name && <p className="error">{errors.name}</p>}
+            {errors.name && <p className="error">{errors.name}</p>}
           </div>
           <div>
             <label>Image: </label>

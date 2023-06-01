@@ -37,12 +37,12 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       createBD: {
-        //Todo lo que yo cree se crea con esta propiedad, es más eficiente.
+        //Todo lo que yo cree se crea con esta propiedad, es más eficiente. //Si el registro fue creado
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: true,
       },
     },
-    { timestamps: true }
+    { timestamps: true } //Marcas de tiempo
   );
 };

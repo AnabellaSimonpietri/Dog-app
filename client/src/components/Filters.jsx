@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const Filters = ({
   sortType,
@@ -9,6 +9,18 @@ const Filters = ({
   handleTemperamentFilterChange,
   allDogs,
 }) => {
+  const [uniqueTemperaments, setUniqueTemperaments] = useState([]);
+
+  useEffect(() => {
+    // Obtengo todos los temperamentos de los perros
+    const temperaments = allDogs
+      .flatMap((dog) => dog.temperament?.split(", "))
+      .filter(Boolean);
+    const unique = [...new Set(temperaments)];
+    const sorted = unique.sort((a, b) => a.localeCompare(b)); // Ordena los temperamentos alfabéticamente
+    setUniqueTemperaments(sorted);
+  }, [allDogs]);
+
   return (
     <div>
       <select value={sortType} onChange={handleSortChange}>
@@ -30,15 +42,11 @@ const Filters = ({
           onChange={handleTemperamentFilterChange}
         >
           <option value="">All Temperaments</option>
-          {/* Acá el usuario puede generar las opciones del select con los temperamentos disponibles */}
-          {allDogs
-            .flatMap((dog) => dog.temperament?.split(", "))
-            .filter(Boolean)
-            .map((temperament) => (
-              <option key={temperament} value={temperament}>
-                {temperament}
-              </option>
-            ))}
+          {uniqueTemperaments.map((temperament) => (
+            <option key={temperament} value={temperament}>
+              {temperament}
+            </option>
+          ))}
         </select>
       )}
     </div>
